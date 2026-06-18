@@ -1,0 +1,10 @@
+{
+  "validUser": {
+    "username": "j2ee",
+    "password": "j2ee"
+  },
+  "invalidUser": {
+    "username": "invalid_user",
+    "password": "wrong_password"
+  }
+}

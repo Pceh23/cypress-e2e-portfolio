@@ -1,0 +1,29 @@
+{
+  "name": "cypress-e2e-portfolio",
+  "version": "1.0.0",
+  "description": "E2E test automation portfolio using Cypress, POM, BDD and GitHub Actions CI/CD",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:login": "cypress run --spec 'cypress/e2e/login/**'",
+    "cy:run:products": "cypress run --spec 'cypress/e2e/products/**'",
+    "cy:run:cart": "cypress run --spec 'cypress/e2e/cart/**'",
+    "cy:run:api": "cypress run --spec 'cypress/e2e/api/**'"
+  },
+  "keywords": [
+    "cypress",
+    "test-automation",
+    "e2e-testing",
+    "page-object-model",
+    "bdd",
+    "ci-cd"
+  ],
+  "author": "Paulo Cesar",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^13.0.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0"
+  }
+}
