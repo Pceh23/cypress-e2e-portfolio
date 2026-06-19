@@ -1,39 +1,45 @@
 class ProductsPage {
-  visit() {
-    cy.visit('/')
-  }
-
-  searchProduct(term) {
-    cy.get('#searchContent').clear().type(term)
-    cy.get('[name="searchProducts"]').click()
+  getTitle() {
+    return cy.get('.title')
   }
 
   getProductList() {
-    return cy.get('#Catalog table tr').not(':first')
+    return cy.get('.inventory_item')
   }
 
-  clickProduct(productName) {
-    cy.contains('a', productName).click()
+  getProductNames() {
+    return cy.get('.inventory_item_name')
   }
 
-  getProductName() {
-    return cy.get('#Catalog h2')
+  getProductPrices() {
+    return cy.get('.inventory_item_price')
   }
 
-  getProductDescription() {
-    return cy.get('#Catalog p')
+  addToCartByIndex(index = 0) {
+    cy.get('.btn_primary.btn_inventory').eq(index).click()
   }
 
-  addToCart() {
-    cy.contains('a', 'Add to Cart').first().click()
+  addToCartByName(productName) {
+    cy.contains('.inventory_item_name', productName)
+      .parents('.inventory_item')
+      .find('.btn_primary.btn_inventory')
+      .click()
   }
 
-  getStockStatus() {
-    return cy.get('#Catalog table').contains('td', 'is available')
+  getCartBadge() {
+    return cy.get('.shopping_cart_badge')
   }
 
-  getOutOfStockItems() {
-    return cy.get('#Catalog table').filter(':contains("Out of Stock")')
+  goToCart() {
+    cy.get('.shopping_cart_link').click()
+  }
+
+  sortBy(option) {
+    cy.get('[data-test="product_sort_container"]').select(option)
+  }
+
+  clickProductByName(productName) {
+    cy.contains('.inventory_item_name', productName).click()
   }
 }
 

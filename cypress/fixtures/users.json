@@ -1,7 +1,11 @@
 {
   "validUser": {
-    "username": "j2ee",
-    "password": "j2ee"
+    "username": "standard_user",
+    "password": "secret_sauce"
+  },
+  "lockedUser": {
+    "username": "locked_out_user",
+    "password": "secret_sauce"
   },
   "invalidUser": {
     "username": "invalid_user",

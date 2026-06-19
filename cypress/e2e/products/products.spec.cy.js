@@ -1,39 +1,42 @@
 import ProductsPage from '../../pages/ProductsPage'
 
-describe('Products', () => {
+describe('Produtos', () => {
   beforeEach(() => {
-    ProductsPage.visit()
+    cy.loginDefault()
   })
 
-  it('should display product categories on homepage', () => {
-    cy.get('#QuickLinks').should('be.visible')
-    cy.contains('a', 'Fish').should('be.visible')
-    cy.contains('a', 'Dogs').should('be.visible')
-    cy.contains('a', 'Cats').should('be.visible')
+  it('deve exibir a página de produtos após login', () => {
+    cy.url().should('include', '/inventory')
+    ProductsPage.getTitle().should('have.text', 'Products')
   })
 
-  it('should navigate to product detail page', () => {
-    cy.contains('a', 'Fish').click()
-    cy.get('#Catalog h2').should('contain', 'Fish')
-    ProductsPage.getProductList().should('have.length.greaterThan', 0)
+  it('deve exibir 6 produtos na lista', () => {
+    ProductsPage.getProductList().should('have.length', 6)
   })
 
-  it('should show product information on detail page', () => {
-    cy.contains('a', 'Dogs').click()
-    cy.get('#Catalog a').first().click()
-    ProductsPage.getProductName().should('be.visible')
-    ProductsPage.getProductDescription().should('be.visible')
+  it('deve exibir nome e preço em todos os produtos', () => {
+    ProductsPage.getProductNames().should('have.length', 6)
+    ProductsPage.getProductPrices().should('have.length', 6)
   })
 
-  it('should display in-stock status for available products', () => {
-    cy.contains('a', 'Fish').click()
-    cy.get('#Catalog a').first().click()
-    cy.get('#Catalog table').contains('is available').should('exist')
+  it('deve ordenar produtos por nome (A-Z)', () => {
+    ProductsPage.sortBy('az')
+    ProductsPage.getProductNames().first().should('have.text', 'Sauce Labs Backpack')
   })
 
-  it('should search for a product by keyword', () => {
-    ProductsPage.searchProduct('fish')
-    cy.get('#Catalog table').should('be.visible')
-    cy.url().should('include', 'search')
+  it('deve ordenar produtos por preço (menor para maior)', () => {
+    ProductsPage.sortBy('lohi')
+    ProductsPage.getProductPrices().first().should('contain', '7.99')
+  })
+
+  it('deve navegar para a página de detalhe do produto', () => {
+    ProductsPage.clickProductByName('Sauce Labs Backpack')
+    cy.url().should('include', '/inventory-item')
+    cy.get('.inventory_details_name').should('contain', 'Sauce Labs Backpack')
+  })
+
+  it('deve adicionar produto ao carrinho e atualizar badge', () => {
+    ProductsPage.addToCartByIndex(0)
+    ProductsPage.getCartBadge().should('have.text', '1')
   })
 })

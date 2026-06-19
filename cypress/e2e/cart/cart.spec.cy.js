@@ -1,34 +1,44 @@
-import LoginPage from '../../pages/LoginPage'
 import ProductsPage from '../../pages/ProductsPage'
 import CartPage from '../../pages/CartPage'
 
-describe('Shopping Cart', () => {
+describe('Carrinho', () => {
   beforeEach(() => {
-    LoginPage.visit()
-    LoginPage.login('j2ee', 'j2ee')
+    cy.loginDefault()
   })
 
-  it('should add a product to the cart', () => {
-    cy.contains('a', 'Fish').click()
-    cy.get('#Catalog a').first().click()
-    cy.contains('a', 'Add to Cart').first().click()
-    CartPage.getCartItems().should('have.length.greaterThan', 0)
+  it('deve adicionar um produto ao carrinho', () => {
+    ProductsPage.addToCartByName('Sauce Labs Backpack')
+    ProductsPage.getCartBadge().should('have.text', '1')
+    ProductsPage.goToCart()
+    CartPage.getCartItems().should('have.length', 1)
+    CartPage.getCartItemNames().should('contain', 'Sauce Labs Backpack')
   })
 
-  it('should update product quantity in cart', () => {
-    cy.contains('a', 'Fish').click()
-    cy.get('#Catalog a').first().click()
-    cy.contains('a', 'Add to Cart').first().click()
-    cy.get('#Cart input[name="quantity"]').first().clear().type('3')
-    cy.contains('button', 'Update Cart').click()
-    cy.get('#Cart input[name="quantity"]').first().should('have.value', '3')
+  it('deve adicionar múltiplos produtos ao carrinho', () => {
+    ProductsPage.addToCartByName('Sauce Labs Backpack')
+    ProductsPage.addToCartByName('Sauce Labs Bike Light')
+    ProductsPage.getCartBadge().should('have.text', '2')
+    ProductsPage.goToCart()
+    CartPage.getCartItems().should('have.length', 2)
   })
 
-  it('should remove a product from the cart', () => {
-    cy.contains('a', 'Fish').click()
-    cy.get('#Catalog a').first().click()
-    cy.contains('a', 'Add to Cart').first().click()
-    cy.get('#Cart a[href*="removeItemFromCart"]').first().click()
-    CartPage.getEmptyCartMessage().should('be.visible')
+  it('deve remover um produto do carrinho', () => {
+    ProductsPage.addToCartByName('Sauce Labs Backpack')
+    ProductsPage.goToCart()
+    CartPage.removeItemByName('Sauce Labs Backpack')
+    CartPage.getCartItems().should('have.length', 0)
+  })
+
+  it('deve voltar para a loja ao clicar em Continue Shopping', () => {
+    ProductsPage.goToCart()
+    CartPage.continueShopping()
+    cy.url().should('include', '/inventory')
+  })
+
+  it('deve navegar para o checkout ao clicar em Checkout', () => {
+    ProductsPage.addToCartByName('Sauce Labs Backpack')
+    ProductsPage.goToCart()
+    CartPage.proceedToCheckout()
+    cy.url().should('include', '/checkout-step-one')
   })
 })

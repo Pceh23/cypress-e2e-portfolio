@@ -1,23 +1,20 @@
-// Custom Cypress commands
-
-/**
- * Login command — reusable across all specs
- * @example cy.login('j2ee', 'j2ee')
- */
+// Login command reutilizável
 Cypress.Commands.add('login', (username, password) => {
-  cy.visit('/actions/Account.action?signonForm=')
-  cy.get('#username').type(username)
-  cy.get('#password').type(password)
-  cy.get(':submit').click()
+  cy.visit('/')
+  cy.get('[data-test="username"]').type(username)
+  cy.get('[data-test="password"]').type(password)
+  cy.get('[data-test="login-button"]').click()
 })
 
-/**
- * Add product to cart by category and product index
- * @example cy.addToCart('Fish', 0)
- */
-Cypress.Commands.add('addToCart', (category, index = 0) => {
-  cy.visit('/')
-  cy.contains('a', category).click()
-  cy.get('#Catalog a').eq(index).click()
-  cy.contains('a', 'Add to Cart').first().click()
+// Login com credenciais padrão do env
+Cypress.Commands.add('loginDefault', () => {
+  cy.login(Cypress.env('username'), Cypress.env('password'))
+})
+
+// Adicionar produto ao carrinho pelo nome
+Cypress.Commands.add('addToCartByName', (productName) => {
+  cy.contains('.inventory_item_name', productName)
+    .parents('.inventory_item')
+    .find('.btn_primary.btn_inventory')
+    .click()
 })

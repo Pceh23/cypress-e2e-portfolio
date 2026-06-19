@@ -1,18 +1,18 @@
 class LoginPage {
   visit() {
-    cy.visit('/actions/Account.action?signonForm=')
+    cy.visit('/')
   }
 
   fillUsername(username) {
-    cy.get('#username').clear().type(username)
+    cy.get('[data-test="username"]').clear().type(username)
   }
 
   fillPassword(password) {
-    cy.get('#password').clear().type(password)
+    cy.get('[data-test="password"]').clear().type(password)
   }
 
   submit() {
-    cy.get(':submit').click()
+    cy.get('[data-test="login-button"]').click()
   }
 
   login(username, password) {
@@ -22,11 +22,7 @@ class LoginPage {
   }
 
   getErrorMessage() {
-    return cy.get('.messages .alert-danger, [class*="error"]')
-  }
-
-  getUserGreeting() {
-    return cy.get('.header .greeting, [id*="WelcomeContent"]')
+    return cy.get('[data-test="error"]')
   }
 }
 
