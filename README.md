@@ -1,6 +1,6 @@
 # cypress-e2e-portfolio
 
-> E2E test automation suite built with **Cypress**, **JavaScript**, **Page Object Model**, **BDD/Cucumber**, and **GitHub Actions CI/CD**.
+> Suíte de testes automatizados E2E construída com **Cypress**, **JavaScript**, **Page Object Model**, **BDD** e **CI/CD com GitHub Actions**.
 
 ![Cypress](https://img.shields.io/badge/Cypress-17202C?style=flat&logo=cypress&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
@@ -9,21 +9,21 @@
 
 ---
 
-## 📋 About This Project
+## 📋 Sobre o Projeto
 
-This portfolio project demonstrates real-world test automation practices applied to the [JPetStore](https://petstore.octoperf.com) demo application.
+Projeto de portfólio que demonstra boas práticas de automação de testes aplicadas ao [Sauce Demo](https://www.saucedemo.com) — aplicação de referência utilizada pela indústria de QA para prática e demonstração de automação.
 
-**What this project covers:**
-- E2E testing with Cypress
-- Page Object Model (POM) pattern for maintainability
-- BDD scenarios written in Gherkin with Cucumber
-- API testing with `cy.request()`
-- CI/CD pipeline with GitHub Actions (runs on every push and PR)
-- Test reports with Mochawesome
+**O que este projeto cobre:**
+- Testes E2E com Cypress
+- Padrão Page Object Model (POM) para manutenibilidade
+- BDD com Cucumber e cenários em Gherkin
+- Testes de API com `cy.request()`
+- Pipeline CI/CD com GitHub Actions (executa a cada push e PR)
+- Relatórios de teste com Mochawesome
 
 ---
 
-## 🗂️ Project Structure
+## 🗂️ Estrutura do Projeto
 
 ```
 cypress-e2e-portfolio/
@@ -56,13 +56,13 @@ cypress-e2e-portfolio/
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Como Executar
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
+### Pré-requisitos
+- Node.js 20+
+- npm
 
-### Installation
+### Instalação
 
 ```bash
 git clone https://github.com/Pceh23/cypress-e2e-portfolio.git
@@ -70,53 +70,61 @@ cd cypress-e2e-portfolio
 npm install
 ```
 
-### Running Tests
+### Executando os Testes
 
 ```bash
-# Open Cypress Test Runner (interactive)
+# Abrir o Cypress Test Runner (modo interativo)
 npm run cy:open
 
-# Run all tests headless (CI mode)
+# Executar todos os testes em modo headless (CI)
 npm run cy:run
 
-# Run specific suite
+# Executar uma suíte específica
 npm run cy:run -- --spec "cypress/e2e/login/**"
+npm run cy:run -- --spec "cypress/e2e/products/**"
+npm run cy:run -- --spec "cypress/e2e/cart/**"
+npm run cy:run -- --spec "cypress/e2e/api/**"
 ```
 
 ---
 
-## 🧪 Test Scenarios
+## 🧪 Cenários de Teste
 
-### Login
-- ✅ Successful login with valid credentials
-- ✅ Error message displayed for invalid credentials
-- ✅ Error message displayed for empty fields
-- ✅ Logout flow
+### Login (5 cenários)
+- ✅ Login com credenciais válidas
+- ✅ Erro ao usar usuário bloqueado
+- ✅ Erro ao usar credenciais inválidas
+- ✅ Erro ao deixar username vazio
+- ✅ Erro ao deixar password vazio
 
-### Products
-- ✅ Display product list on homepage
-- ✅ Navigate to product detail page
-- ✅ Out-of-stock product shows correct status
+### Produtos (7 cenários)
+- ✅ Exibe página de produtos após login
+- ✅ Lista 6 produtos corretamente
+- ✅ Exibe nome e preço de todos os produtos
+- ✅ Ordena produtos por nome (A-Z)
+- ✅ Ordena produtos por preço (menor para maior)
+- ✅ Navega para a página de detalhe do produto
+- ✅ Adiciona produto ao carrinho e atualiza badge
 
-### Cart
-- ✅ Add product to cart
-- ✅ Update product quantity
-- ✅ Remove product from cart
-- ✅ Cart persists after page reload
+### Carrinho (5 cenários)
+- ✅ Adiciona um produto ao carrinho
+- ✅ Adiciona múltiplos produtos ao carrinho
+- ✅ Remove produto do carrinho
+- ✅ Volta para a loja ao clicar em Continue Shopping
+- ✅ Navega para o checkout
 
-### API
-- ✅ GET /api/products returns 200
-- ✅ Response contains required fields
-- ✅ Product schema validation
+### API (3 cenários)
+- ✅ Retorna 200 para a página de login
+- ✅ Retorna 200 para o inventário com sessão ativa
+- ✅ Redireciona para login ao acessar inventário sem autenticação
 
 ---
 
 ## ⚙️ CI/CD
 
-Tests run automatically on every push and pull request via GitHub Actions.
+Os testes são executados automaticamente a cada push e pull request via GitHub Actions.
 
 ```yaml
-# .github/workflows/cypress-ci.yml
 on: [push, pull_request]
 jobs:
   cypress-run:
@@ -130,26 +138,19 @@ jobs:
 
 ---
 
-## 📊 Test Report
+## 🛠️ Stack Utilizada
 
-After running tests, HTML report is generated at `cypress/reports/index.html` using Mochawesome.
-
----
-
-## 🛠️ Tech Stack
-
-| Tool | Purpose |
+| Ferramenta | Finalidade |
 |---|---|
-| Cypress 13 | E2E test framework |
-| JavaScript (ES6+) | Test language |
-| Cucumber / Gherkin | BDD scenarios |
-| Page Object Model | Test architecture pattern |
-| GitHub Actions | CI/CD pipeline |
-| Mochawesome | HTML test reports |
+| Cypress 13 | Framework de testes E2E |
+| JavaScript (ES6+) | Linguagem dos testes |
+| Page Object Model | Padrão de arquitetura dos testes |
+| GitHub Actions | Pipeline de CI/CD |
+| Mochawesome | Relatórios HTML de testes |
 
 ---
 
-## 👤 Author
+## 👤 Autor
 
 **Paulo Cesar**  
 QA Engineer | Test Automation Engineer  
